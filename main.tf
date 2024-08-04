@@ -33,3 +33,14 @@ module "vpc" {
   private_subnet = local.subnets["private"]
   public_subnet  = local.subnets["public"]
 }
+
+# deploy the grafana server
+module "grafana" {
+  source = "./grafana"
+
+  grafana_server_details = local.grafana_server_details
+
+  depends_on = [
+    module.vpc
+  ]
+}

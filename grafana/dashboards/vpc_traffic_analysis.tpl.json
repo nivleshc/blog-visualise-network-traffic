@@ -1,0 +1,1041 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Traffic Analysis",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 2,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "cloudwatch-ds-uid"
+      },
+      "description": "Number of connections accepted",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 0,
+        "y": 0
+      },
+      "id": 6,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "cloudwatch-ds-uid"
+          },
+          "dimensions": {},
+          "expression": "fields @timestamp\n| parse @message '* * * * * * * * * * * * *' as version, account_id, interface_id, srcaddr, dstaddr, srcport, dstport, proto, packets, bytes, start_time, end_time, action\n| filter dstaddr like /10.0.2/\n| filter action = \"ACCEPT OK\"\n| stats count()",
+          "id": "",
+          "label": "",
+          "logGroups": [
+            {
+              "accountId": "919160726272",
+              "arn": "arn:aws:logs:ap-southeast-2:919160726272:log-group:/aws/vpc/flowlogs:*",
+              "name": "/aws/vpc/flowlogs"
+            }
+          ],
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "",
+          "metricQueryType": 0,
+          "namespace": "",
+          "period": "",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "default",
+          "sqlExpression": "",
+          "statistic": "Average",
+          "statsGroups": []
+        }
+      ],
+      "timeFrom": "now/d",
+      "title": "Accepted",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "cloudwatch-ds-uid"
+      },
+      "description": "Number of connections rejected",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 4,
+        "y": 0
+      },
+      "id": 7,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "cloudwatch-ds-uid"
+          },
+          "dimensions": {},
+          "expression": "fields @timestamp\n| parse @message '* * * * * * * * * * * * *' as version, account_id, interface_id, srcaddr, dstaddr, srcport, dstport, proto, packets, bytes, start_time, end_time, action\n| filter dstaddr like /10.0.2/\n| filter action = \"REJECT OK\"\n| stats count()",
+          "id": "",
+          "label": "",
+          "logGroups": [
+            {
+              "accountId": "919160726272",
+              "arn": "arn:aws:logs:ap-southeast-2:919160726272:log-group:/aws/vpc/flowlogs:*",
+              "name": "/aws/vpc/flowlogs"
+            }
+          ],
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "",
+          "metricQueryType": 0,
+          "namespace": "",
+          "period": "",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "default",
+          "sqlExpression": "",
+          "statistic": "Average",
+          "statsGroups": []
+        }
+      ],
+      "timeFrom": "now/d",
+      "title": "Rejected",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "cloudwatch-ds-uid"
+      },
+      "description": "Total number of connections accepted since $${__from:date:MMM-DD hh.mma}",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 5,
+        "x": 8,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "cloudwatch-ds-uid"
+          },
+          "dimensions": {},
+          "expression": "fields @timestamp\n| parse @message '* * * * * * * * * * * * *' as version, account_id, interface_id, srcaddr, dstaddr, srcport, dstport, proto, packets, bytes, start_time, end_time, action\n| filter dstaddr like /10.0.2/\n| filter action = \"ACCEPT OK\"\n| stats count()",
+          "id": "",
+          "label": "",
+          "logGroups": [
+            {
+              "accountId": "919160726272",
+              "arn": "arn:aws:logs:ap-southeast-2:919160726272:log-group:/aws/vpc/flowlogs:*",
+              "name": "/aws/vpc/flowlogs"
+            }
+          ],
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "",
+          "metricQueryType": 0,
+          "namespace": "",
+          "period": "",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "default",
+          "sqlExpression": "",
+          "statistic": "Average",
+          "statsGroups": []
+        }
+      ],
+      "title": "Total Accepted Since $${__from:date:MMM-DD hh.mma}",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "cloudwatch-ds-uid"
+      },
+      "description": "Total number of connections that were rejected since $${__from:date:MMM-DD hh.mma}",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 5,
+        "x": 13,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "cloudwatch-ds-uid"
+          },
+          "dimensions": {},
+          "expression": "fields @timestamp\n| parse @message '* * * * * * * * * * * * *' as version, account_id, interface_id, srcaddr, dstaddr, srcport, dstport, proto, packets, bytes, start_time, end_time, action\n| filter dstaddr like /10.0.2/\n| filter action = \"REJECT OK\"\n| stats count()",
+          "id": "",
+          "label": "",
+          "logGroups": [
+            {
+              "accountId": "919160726272",
+              "arn": "arn:aws:logs:ap-southeast-2:919160726272:log-group:/aws/vpc/flowlogs:*",
+              "name": "/aws/vpc/flowlogs"
+            }
+          ],
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "",
+          "metricQueryType": 0,
+          "namespace": "",
+          "period": "",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "default",
+          "sqlExpression": "",
+          "statistic": "Average",
+          "statsGroups": []
+        }
+      ],
+      "title": "Total Rejected Since $${__from:date:MMM-DD hh.mma}",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "cloudwatch-ds-uid"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "dstaddr"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Detailed information about the IP address",
+                    "url": "https://ipinfo.io/widget/demo/$${__data.fields.dstaddr}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 18,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": false
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "cloudwatch-ds-uid"
+          },
+          "dimensions": {},
+          "expression": "fields @timestamp\n| parse @message '* * * * * * * * * * * * *' as version, account_id, interface_id, srcaddr, dstaddr, srcport, dstport, proto, packets, bytes, start_time, end_time, action\n| filter dstaddr like /10.0.2/\n| display dstaddr\n| dedup dstaddr",
+          "id": "",
+          "label": "",
+          "logGroups": [
+            {
+              "accountId": "919160726272",
+              "arn": "arn:aws:logs:ap-southeast-2:919160726272:log-group:/aws/vpc/flowlogs:*",
+              "name": "/aws/vpc/flowlogs"
+            }
+          ],
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "",
+          "metricQueryType": 0,
+          "namespace": "",
+          "period": "",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "default",
+          "sqlExpression": "",
+          "statistic": "Average",
+          "statsGroups": []
+        }
+      ],
+      "title": "Local Targets",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "cloudwatch-ds-uid"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "srcaddr"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Detailed information about the IP address",
+                    "url": "https://ipinfo.io/widget/demo/$${__data.fields.srcaddr}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 6,
+        "x": 0,
+        "y": 5
+      },
+      "id": 5,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "cloudwatch-ds-uid"
+          },
+          "dimensions": {},
+          "expression": "fields @timestamp\n| parse @message '* * * * * * * * * * * * *' as version, account_id, interface_id, srcaddr, dstaddr, srcport, dstport, proto, packets, bytes, start_time, end_time, action\n| filter dstaddr like /10.0.2/\n| stats count() as count by srcaddr\n| sort by count desc",
+          "id": "",
+          "label": "",
+          "logGroups": [
+            {
+              "accountId": "919160726272",
+              "arn": "arn:aws:logs:ap-southeast-2:919160726272:log-group:/aws/vpc/flowlogs:*",
+              "name": "/aws/vpc/flowlogs"
+            }
+          ],
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "",
+          "metricQueryType": 0,
+          "namespace": "",
+          "period": "",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "default",
+          "sqlExpression": "",
+          "statistic": "Average",
+          "statsGroups": [
+            "srcaddr"
+          ]
+        }
+      ],
+      "title": "All Traffic Sources",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "cloudwatch-ds-uid"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "srcaddr"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Detailed information about the IP address",
+                    "url": "https://ipinfo.io/widget/demo/$${__data.fields.srcaddr}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 6,
+        "x": 6,
+        "y": 5
+      },
+      "id": 8,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "cloudwatch-ds-uid"
+          },
+          "dimensions": {},
+          "expression": "fields @timestamp\n| parse @message '* * * * * * * * * * * * *' as version, account_id, interface_id, srcaddr, dstaddr, srcport, dstport, proto, packets, bytes, start_time, end_time, action\n| filter dstaddr like /10.0.2/\n| filter action = 'REJECT OK'\n| stats count() as count by srcaddr\n| sort by count desc",
+          "id": "",
+          "label": "",
+          "logGroups": [
+            {
+              "accountId": "919160726272",
+              "arn": "arn:aws:logs:ap-southeast-2:919160726272:log-group:/aws/vpc/flowlogs:*",
+              "name": "/aws/vpc/flowlogs"
+            }
+          ],
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "",
+          "metricQueryType": 0,
+          "namespace": "",
+          "period": "",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "default",
+          "sqlExpression": "",
+          "statistic": "Average",
+          "statsGroups": [
+            "srcaddr"
+          ]
+        }
+      ],
+      "title": "Traffic Sources Blocked",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "cloudwatch-ds-uid"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "srcaddr"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Detailed information about the IP address",
+                    "url": "https://ipinfo.io/widget/demo/$${__data.fields.srcaddr}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 6,
+        "x": 12,
+        "y": 5
+      },
+      "id": 9,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "cloudwatch-ds-uid"
+          },
+          "dimensions": {},
+          "expression": "fields @timestamp\n| parse @message '* * * * * * * * * * * * *' as version, account_id, interface_id, srcaddr, dstaddr, srcport, dstport, proto, packets, bytes, start_time, end_time, action\n| filter dstaddr like /10.0.2/\n| filter action = 'ACCEPT OK'\n| stats count() as count by srcaddr\n| sort by count desc",
+          "id": "",
+          "label": "",
+          "logGroups": [
+            {
+              "accountId": "919160726272",
+              "arn": "arn:aws:logs:ap-southeast-2:919160726272:log-group:/aws/vpc/flowlogs:*",
+              "name": "/aws/vpc/flowlogs"
+            }
+          ],
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "",
+          "metricQueryType": 0,
+          "namespace": "",
+          "period": "",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "default",
+          "sqlExpression": "",
+          "statistic": "Average",
+          "statsGroups": [
+            "srcaddr"
+          ]
+        }
+      ],
+      "title": "Traffic Sources Accepted",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "cloudwatch-ds-uid"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "srcaddr"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Detailed information about the IP address",
+                    "url": "https://ipinfo.io/widget/demo/$${__data.fields.srcaddr}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 6,
+        "x": 18,
+        "y": 5
+      },
+      "id": 11,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "cloudwatch-ds-uid"
+          },
+          "dimensions": {},
+          "expression": "fields @timestamp\n| parse @message '* * * * * * * * * * * * *' as version, account_id, interface_id, srcaddr, dstaddr, srcport, dstport, proto, packets, bytes, start_time, end_time, action\n| filter dstaddr like /10.0.2/\n| stats count() as count by dstport\n| sort by count desc\n| display dstport, count",
+          "id": "",
+          "label": "",
+          "logGroups": [
+            {
+              "accountId": "919160726272",
+              "arn": "arn:aws:logs:ap-southeast-2:919160726272:log-group:/aws/vpc/flowlogs:*",
+              "name": "/aws/vpc/flowlogs"
+            }
+          ],
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "",
+          "metricQueryType": 0,
+          "namespace": "",
+          "period": "",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "default",
+          "sqlExpression": "",
+          "statistic": "Average",
+          "statsGroups": [
+            "dstport"
+          ]
+        }
+      ],
+      "title": "Summary Of Port Numbers Queried",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "cloudwatch",
+        "uid": "cloudwatch-ds-uid"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "srcaddr"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 178
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Detailed information about the IP address",
+                    "url": "https://ipinfo.io/widget/demo/$${__data.fields.srcaddr}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "dstaddr"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Detailed information about the IP address",
+                    "url": "https://ipinfo.io/widget/demo/$${__data.fields.dstaddr}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 23,
+        "x": 0,
+        "y": 15
+      },
+      "id": 1,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Time"
+          }
+        ]
+      },
+      "pluginVersion": "11.1.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "cloudwatch",
+            "uid": "cloudwatch-ds-uid"
+          },
+          "dimensions": {},
+          "expression": "fields @timestamp\n| parse @message '* * * * * * * * * * * * *' as version, account_id, interface_id, srcaddr, dstaddr, srcport, dstport, proto, packets, bytes, start_time, end_time, action\n| filter dstaddr like /10.0.2/\n| sort @timestamp desc",
+          "id": "",
+          "label": "",
+          "logGroups": [
+            {
+              "accountId": "919160726272",
+              "arn": "arn:aws:logs:ap-southeast-2:919160726272:log-group:/aws/vpc/flowlogs:*",
+              "name": "/aws/vpc/flowlogs"
+            }
+          ],
+          "matchExact": true,
+          "metricEditorMode": 0,
+          "metricName": "",
+          "metricQueryType": 0,
+          "namespace": "",
+          "period": "",
+          "queryMode": "Logs",
+          "refId": "A",
+          "region": "default",
+          "sqlExpression": "",
+          "statistic": "Average",
+          "statsGroups": []
+        }
+      ],
+      "title": "Raw Traffic Data",
+      "type": "table"
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-30m",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Traffic Analysis",
+  "uid": "bdftueiezxwxsd",
+  "version": 6,
+  "weekStart": ""
+}
